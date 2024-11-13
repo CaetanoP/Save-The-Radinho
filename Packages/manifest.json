@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.unity.collab-proxy": "2.5.2",
+    "com.unity.device-simulator.devices": "1.0.0",
     "com.unity.feature.2d": "2.0.1",
     "com.unity.feature.mobile": "1.0.0",
     "com.unity.ide.rider": "3.0.31",
@@ -10,6 +11,7 @@
     "com.unity.render-pipelines.universal": "17.0.3",
     "com.unity.timeline": "1.8.7",
     "com.unity.ugui": "2.0.0",
+    "com.unity.vectorgraphics": "2.0.0-preview.24",
     "com.unity.visualscripting": "1.9.4",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
