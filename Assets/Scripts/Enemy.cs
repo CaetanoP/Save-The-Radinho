@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
         }
 
         // Realiza o ataque se for o momento
-        if (Time.time >= nextAttackTime && isWalking)
+        if (Time.time >= nextAttackTime)
         {
             Attack();
             nextAttackTime = Time.time + attackSpeed; // Atualiza o próximo momento para atacar

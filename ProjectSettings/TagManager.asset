@@ -42,5 +42,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Map
+    uniqueID: 101744269
+    locked: 0
+  - name: Props
+    uniqueID: 3657861653
+    locked: 0
+  - name: CHARACTER
+    uniqueID: 3704688593
+    locked: 0
+  - name: Hud
+    uniqueID: 1017134173
+    locked: 0
   m_RenderingLayers:
   - Default
