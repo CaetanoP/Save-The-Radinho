@@ -10,16 +10,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] public float health = 100f; // Vida do Inimigo
     [SerializeField] private float attackSpeed = 1f; // Tempo entre ataques em segundos
     [SerializeField] private GameObject projectile; // Projétil do Inimigo
+    [SerializeField] private float velocity = 3f; // Velocidade do Inimigo
 
     private float nextAttackTime = 0f; // Tempo do próximo ataque
 
     private float randomStopTime = 0f; // Tempo aleatório para parar de andar
 
-    private bool isWalking = true; // Verifica se o inimigo está andando
 
     void Start()
     {
-        randomStopTime = Random.Range(2f, 5f); // Define um tempo aleatório para parar de andar
+        randomStopTime = Random.Range(1f, 5f); // Define um tempo aleatório para parar de andar
     }
     void Update()
     {
@@ -36,12 +36,13 @@ public class Enemy : MonoBehaviour
             nextAttackTime = Time.time + attackSpeed; // Atualiza o próximo momento para atacar
         }
 
-        if (Time.time >= randomStopTime)
+        //Calcula quanto tempo desde o spawn desse inimigo
+        if(Time.time <= randomStopTime && GameObject.FindGameObjectsWithTag("Player").Length > 0.3)
         {
-            randomStopTime = Time.time + Random.Range(2f, 5f); // Atualiza o próximo momento para parar de andar
-            isWalking = !isWalking; // Inverte o estado de andar
-            Debug.Log("Inimigo parou de andar");
+            //Se move para a esquerda
+            transform.Translate(Vector3.left * velocity * Time.deltaTime); 
         }
+        
 
     }
 
