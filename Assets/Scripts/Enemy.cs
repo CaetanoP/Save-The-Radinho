@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // Variáveis de controle do Inimigo
-    [SerializeField] public float health = 100f; // Vida do Inimigo
+    [SerializeField] public float health = 3f; // Vida do Inimigo
     [SerializeField] private float attackSpeed = 1f; // Tempo entre ataques em segundos
     [SerializeField] private GameObject projectile; // Projétil do Inimigo
     [SerializeField] private float velocity = 3f; // Velocidade do Inimigo
@@ -16,12 +16,12 @@ public class Enemy : MonoBehaviour
 
     private float randomStopTime = 0f; // Tempo aleatório para parar de andar
 
-
-    void Start()
+    private float ammo = 0f; // Quantidade de munição do inimigo
+    public void Start()
     {
         randomStopTime = Random.Range(1f, 5f); // Define um tempo aleatório para parar de andar
     }
-    void Update()
+    public void Update()
     {
         // Verifica se o inimigo está vivo
         if (health <= 0)
@@ -37,12 +37,12 @@ public class Enemy : MonoBehaviour
         }
 
         //Calcula quanto tempo desde o spawn desse inimigo
-        if(Time.time <= randomStopTime && GameObject.FindGameObjectsWithTag("Player").Length > 0.3)
+        if (Time.time <= randomStopTime && GameObject.FindGameObjectsWithTag("Player").Length > 0.3)
         {
             //Se move para a esquerda
-            transform.Translate(Vector3.left * velocity * Time.deltaTime); 
+            transform.Translate(Vector3.left * velocity * Time.deltaTime);
         }
-        
+
 
     }
 
@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        
+
     }
 }
 
