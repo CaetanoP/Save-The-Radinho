@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3350562809999174432}
   m_Layer: 0
   m_Name: Beta
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,6 +140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   damage: 10
+  credit: 0
+  projectileName: Beta
 --- !u!50 &3350562809999174432
 Rigidbody2D:
   serializedVersion: 5

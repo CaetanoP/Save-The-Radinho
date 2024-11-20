@@ -9,12 +9,19 @@ public class Player : MonoBehaviour
 {
     // Variáveis de controle do jogador
     [SerializeField] public float health = 100f; // Vida do jogador
-    [SerializeField] private float attackSpeed = 1f; // Tempo entre ataques em segundos
+    [SerializeField] private float attackSpeed = 5f; // Tempo entre ataques em segundos
     [SerializeField] private GameObject projectile; // Projétil do jogador
+    [Header("Crédito do jogador")]
+    [SerializeField] public int credit = 0; // Crédito do jogador
 
     private float nextAttackTime = 0f; // Tempo do próximo ataque
 
-    void Update()
+    public void Start()
+    {
+        // Da crédito inicial ao jogador
+        credit = 100;
+    }
+    public void Update()
     {
         // Verifica se o jogador está vivo
         if (health <= 0)
@@ -23,11 +30,12 @@ public class Player : MonoBehaviour
         }
 
         // Realiza o ataque se for o momento
-        if (Time.time >= nextAttackTime)
+        if (Time.timeSinceLevelLoad >= nextAttackTime)
         {
             Attack();
-            nextAttackTime = Time.time + attackSpeed; // Atualiza o próximo momento para atacar
+            nextAttackTime = Time.timeSinceLevelLoad + attackSpeed; // Atualiza o próximo momento para atacar
         }
+
     }
 
     private void Die()
@@ -52,6 +60,6 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        Debug.Log("Jogador recebeu " + damage + " de dano. Vida restante: " + health);
+        //Debug.Log("Jogador recebeu " + damage + " de dano. Vida restante: " + health);
     }
 }

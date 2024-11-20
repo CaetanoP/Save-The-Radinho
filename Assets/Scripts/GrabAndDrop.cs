@@ -1,51 +1,118 @@
 using UnityEngine;
+
 /// <summary>
-/// Esse script é responsável por gerenciar a mecânica de pegar e arrastar objetos no jogo.
+/// Script responsável por gerenciar a mecânica de pegar e arrastar objetos no jogo.
 /// Focado na experiência do usuário mobile.
 /// </summary>
 public class GrabAndDrop : MonoBehaviour
 {
-    private GameObject selectedObject; // Armazena o objeto que está sendo arrastado
+    private GameObject selectedObject; // Objeto atualmente selecionado
+    private Vector3 touchPosition; // Posição do toque convertida para o mundo
+    private Collider2D touchedCollider; // Collider do objeto tocado
+
+    
+    private bool isSomeTimeFar = false; // Verifica se o objeto esta muito longe do mouse
 
     // Start é chamado uma vez antes do primeiro frame de Update
-    void Start()
+    private void Start()
     {
-        Screen.orientation = ScreenOrientation.LandscapeLeft; // Define a orientação da tela
+        // Configura a orientação da tela para LandscapeLeft
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
     }
 
     // Update é chamado uma vez por frame
-    void Update()
+    private void Update()
     {
-        // Verifica se o jogador está tocando na tela
-        if (Input.touchCount > 0)
+        HandleTouchInput();
+    }
+
+    /// <summary>
+    /// Gerencia a entrada do toque na tela.
+    /// </summary>
+    private void HandleTouchInput()
+    {
+        // Verifica se há toques na tela
+        if (Input.touchCount <= 0)
+            return;
+
+        Touch touch = Input.GetTouch(0);
+        touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+        touchPosition.z = 0; // Garantir que o movimento seja em 2D
+
+        // Processa o toque com base na fase
+        switch (touch.phase)
         {
-            Touch touch = Input.GetTouch(0);
-            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position); // Pega a posição do toque
-            touchPosition.z = 0; // Define a profundidade como 0, já que é um jogo 2D
+            case TouchPhase.Began:
+                HandleTouchBegan();
+                break;
 
-            // Verifica a fase do toque
-            switch (touch.phase)
+            case TouchPhase.Moved:
+                HandleTouchMoved();
+                break;
+
+            case TouchPhase.Ended:
+                HandleTouchEnded();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Lida com o início do toque na tela.
+    /// </summary>
+    private void HandleTouchBegan()
+    {
+        touchedCollider = Physics2D.OverlapPoint(touchPosition);
+        isSomeTimeFar = false;
+        if (touchedCollider != null)
+        {
+            selectedObject = touchedCollider.gameObject;
+
+            // Verifica se o objeto possui o componente Item
+            Item itemComponent = selectedObject.GetComponent<Item>();
+            if (itemComponent != null)
             {
-                case TouchPhase.Began: // Quando o toque começa
-                    Collider2D touchedCollider = Physics2D.OverlapPoint(touchPosition);
-
-                    if (touchedCollider != null)
-                    {
-                        selectedObject = touchedCollider.gameObject; // Seleciona o objeto tocado
-                    }
-                    break;
-
-                case TouchPhase.Moved: // Quando o toque se move
-                    if (selectedObject != null)
-                    {
-                        selectedObject.transform.position = touchPosition; // Move o objeto para a posição do toque
-                    }
-                    break;
-
-                case TouchPhase.Ended: // Quando o toque termina
-                    selectedObject = null; // Libera o objeto arrastado
-                    break;
+                itemComponent.WhenGrabbed();
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Lida com o movimento do toque na tela.
+    /// </summary>
+    private void HandleTouchMoved()
+    {
+        if (selectedObject != null)
+        {
+            //Verifica se o objeto nao esta muito longe do mouse
+            if (Vector3.Distance(selectedObject.transform.position, touchPosition) < 2 && isSomeTimeFar == false)
+            {
+                selectedObject.transform.position = touchPosition;
+            }
+            else
+            {
+                isSomeTimeFar = true;
+            }
+            
+        }
+    }
+
+    /// <summary>
+    /// Lida com o fim do toque na tela.
+    /// </summary>
+    private void HandleTouchEnded()
+    {
+        if (selectedObject != null)
+        {
+            Item itemComponent = selectedObject.GetComponent<Item>();
+            if (itemComponent != null)
+            {
+                // Retorna o objeto para a posição inicial
+                selectedObject.transform.position = itemComponent.initialPosition;
+            }
+
+            // Limpa a referência do objeto selecionado
+            selectedObject = null;
         }
     }
 }
