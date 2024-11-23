@@ -42,8 +42,12 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Metodo chamdo pelo botão de ataque
     /// </summary>
-    private void Attack()
+    public void Attack()
     {
+        if(!canAttack)
+        {
+            return;
+        }
         // Lógica de ataque ao inimigo
         GameObject instance = Instantiate(projectile, transform.position, Quaternion.identity);
 
@@ -51,6 +55,7 @@ public class Player : MonoBehaviour
         instance.GetComponent<Projectile>().targetTag = "Enemy";
         // Define a orientação do projétil
         instance.GetComponent<Projectile>().orientation = Vector3.right;
+        canAttack = false;
         Invoke("Reload", reloadTime);
     }
 
