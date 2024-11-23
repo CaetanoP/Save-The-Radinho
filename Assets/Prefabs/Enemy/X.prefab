@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   damage: 10
-  credit: 0
+  credit: 35
   projectileName: RaioX
 --- !u!50 &83958378666766809
 Rigidbody2D:

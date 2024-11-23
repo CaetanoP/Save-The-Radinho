@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   damage: 10
-  credit: 0
+  credit: 45
   projectileName: Gama
 --- !u!50 &554570395014919272
 Rigidbody2D:

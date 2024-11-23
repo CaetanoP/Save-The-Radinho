@@ -1,33 +1,62 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> enemies = new List<GameObject>();
-    [SerializeField] private float spawnRate = 3f;
-    [SerializeField] public int Cost = 0;
+    [SerializeField] private List<GameObject> enemies = new List<GameObject>(); // Lista de inimigos possíveis
+    [SerializeField] private float initialSpawnRate = 3f; // Taxa inicial de spawn
+    [SerializeField] private float spawnRateDecrease = 0.1f; // Quanto a taxa de spawn diminui com o tempo
+    [SerializeField] private float minSpawnRate = 0.5f; // Taxa mínima de spawn
+    [SerializeField] private int initialEnemiesPerSpawn = 1; // Número inicial de inimigos por spawn
+    [SerializeField] private int maxEnemiesPerSpawn = 5; // Número máximo de inimigos por spawn
+    [SerializeField] private float difficultyIncreaseRate = 10f; // Intervalo para aumentar a dificuldade (em segundos)
 
-    // Update is called once per frame
-    public void Update()
+    private float nextSpawnTime; // Próximo momento de spawn
+    private int currentEnemiesPerSpawn; // Número atual de inimigos por spawn
+    private float currentSpawnRate; // Taxa atual de spawn
+    private float lastDifficultyIncreaseTime; // Momento em que a dificuldade foi aumentada pela última vez
+
+    private void Start()
     {
-        //Se o tempo atual for maior que o tempo de spawn
-        if (Time.timeSinceLevelLoad >= spawnRate)
+        currentSpawnRate = initialSpawnRate;
+        currentEnemiesPerSpawn = initialEnemiesPerSpawn;
+        nextSpawnTime = Time.time + currentSpawnRate;
+        lastDifficultyIncreaseTime = Time.time;
+    }
+
+    private void Update()
+    {
+        if (Time.time >= nextSpawnTime)
         {
-            //Spawna um inimigo
-            SpawnEnemy();
-            //Atualiza o tempo de spawn
-            spawnRate = Time.timeSinceLevelLoad + spawnRate;
+            SpawnEnemies();
+            nextSpawnTime = Time.time + currentSpawnRate;
+        }
+
+        if (Time.time >= lastDifficultyIncreaseTime + difficultyIncreaseRate)
+        {
+            IncreaseDifficulty();
+            lastDifficultyIncreaseTime = Time.time;
         }
     }
 
-    void SpawnEnemy()
+    private void SpawnEnemies()
     {
-        //Random index
-        int index = UnityEngine.Random.Range(0, enemies.Count);
-        //Instancia um inimigo aleatório
-        Instantiate(enemies[index], transform.position, Quaternion.identity);
+        for (int i = 0; i < currentEnemiesPerSpawn; i++)
+        {
+            int index = Random.Range(0, enemies.Count);
+            Instantiate(enemies[index], transform.position, Quaternion.identity);
+        }
     }
 
+    private void IncreaseDifficulty()
+    {
+        // Diminui o tempo entre os spawns
+        currentSpawnRate = Mathf.Max(currentSpawnRate - spawnRateDecrease, minSpawnRate);
 
+        // Aumenta o número de inimigos por spawn, até o máximo permitido
+        if (currentEnemiesPerSpawn < maxEnemiesPerSpawn)
+        {
+            currentEnemiesPerSpawn++;
+        }
+    }
 }

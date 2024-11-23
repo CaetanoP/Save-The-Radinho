@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   damage: 10
-  credit: 0
+  credit: 25
   projectileName: Beta
 --- !u!50 &3350562809999174432
 Rigidbody2D:

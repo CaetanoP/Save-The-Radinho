@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   damage: 10
-  credit: 10
+  credit: 15
   projectileName: Alfa
 --- !u!50 &-5013266277875986255
 Rigidbody2D:
