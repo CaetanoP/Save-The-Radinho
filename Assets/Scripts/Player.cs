@@ -1,6 +1,6 @@
 using System;
+using TMPro;
 using UnityEngine;
-
 /// <summary>
 /// Este script gerencia o jogador.
 /// Ele controla a vida, ataque e velocidade de ataque do jogador.
@@ -15,13 +15,16 @@ public class Player : MonoBehaviour
     [Header("Crédito do jogador")]
     [SerializeField] public int credit = 0; // Crédito do jogador
     // Variáveis de controle do ataque
+    [SerializeField] private TextMeshProUGUI healthText; // Barra de vida do jogador
     bool canAttack = true; // Pode atacar?
     private float nextAttackTime = 0f; // Tempo do próximo ataque
 
     public void Start()
     {
         // Da crédito inicial ao jogador
-        credit = 100;
+        credit = 100; 
+        //Atualiza a barra de vida
+        healthText.text = health.ToString();
     }
     public void Update()
     {
@@ -63,7 +66,8 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        //Debug.Log("Jogador recebeu " + damage + " de dano. Vida restante: " + health);
+        //Atualiza a barra de vida
+        healthText.text = health.ToString();
     }
 
     public void Reload()

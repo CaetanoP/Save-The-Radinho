@@ -14,8 +14,6 @@ public class Enemy : MonoBehaviour
 
     private float nextAttackTime = 0f; // Tempo do próximo ataque
 
-    private float randomStopTime = 0f; // Tempo aleatório para parar de andar
-
     public void Start()
     {
     
@@ -35,11 +33,19 @@ public class Enemy : MonoBehaviour
             nextAttackTime = Time.time + attackSpeed; // Atualiza o próximo momento para atacar
         }
 
-        //Calcula quanto tempo desde o spawn desse inimigo
-        if (GameObject.FindGameObjectsWithTag("Player").Length > 0.3)
+        //Se a distancia do player for menor que 10, o inimigo da dano no player e para de andar
+        if(Vector3.Distance(transform.position, GameObject.Find("Player").transform.position) < 1)
         {
-            //Se move para a esquerda
-            transform.Translate(Vector3.left * velocity * Time.deltaTime);
+            Debug.Log("Player está perto");
+            GameObject.Find("Player").GetComponent<Player>().TakeDamage(10);
+            Destroy(gameObject);
+            velocity = 0;
+        }
+        else
+        {
+            // Movimenta o inimigo
+            transform.position += Vector3.left * Time.deltaTime * velocity;
+            velocity = 3;
         }
 
 

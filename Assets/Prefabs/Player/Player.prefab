@@ -148,6 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  attackSpeed: 1
+  reloadTime: 3
   projectile: {fileID: 2273216756317770805, guid: 9a9cbdc48e0cf6148aea136630015649, type: 3}
   credit: 0
