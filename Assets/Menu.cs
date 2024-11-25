@@ -13,11 +13,6 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
 
-    public void Start()
-    {
-        Debug.Log("Menu Iniciado");
-        Screen.orientation = ScreenOrientation.Portrait;
-    }
     public void PlayGame()
     {
         // Carrega a cena do jogo

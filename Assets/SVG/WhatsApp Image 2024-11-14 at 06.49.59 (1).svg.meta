@@ -8,14 +8,14 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: a57477913897c46af95d590f580878bd, type: 3}
-  svgType: 0
+  svgType: 1
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
   gradientResolution: 64
   alignment: 0
   customPivot: {x: 0, y: 0}
-  generatePhysicsShape: 0
-  viewportOptions: 0
+  generatePhysicsShape: 1
+  viewportOptions: 1
   preserveViewport: 0
   advancedMode: 0
   predefinedResolutionIndex: 1
@@ -32,10 +32,10 @@ ScriptedImporter:
   textureWidth: 256
   textureHeight: 256
   wrapMode: 0
-  filterMode: 1
-  sampleCount: 4
+  filterMode: 0
+  sampleCount: 1
   preserveSVGImageAspect: 0
-  useSVGPixelsPerUnit: 0
+  useSVGPixelsPerUnit: 1
   spriteData:
     TessellationDetail: 0
     SpriteRect:
